@@ -1,18 +1,15 @@
-
-// client/src/components/EventDetails.jsx (Plain CSS) - Updated with Edit Functionality
 import React, { useState, useEffect, useContext } from 'react';
-import { fetchEventById, rsvpToEvent, fetchRsvpsForEvent, deleteEvent, updateEvent } from '../api'; // Import API functions including updateEvent
+import { fetchEventById, rsvpToEvent, fetchRsvpsForEvent, deleteEvent, updateEvent } from '../api'; 
 import RSVPForm from './RSVPForm'; // Import the RSVP form component
 import { AuthContext } from '../App'; // To get logged-in user info
-
 const EventDetails = ({ eventId, onBackToList, showNotification }) => {
     const { user } = useContext(AuthContext); // Get user from context
     const [event, setEvent] = useState(null);
     const [rsvps, setRsvps] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isRsvpConfirmed, setIsRsvpConfirmed] = useState(false); // Track if user has RSVP'd
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // State for delete confirmation modal
+    const [isRsvpConfirmed, setIsRsvpConfirmed] = useState(false); 
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); 
     const [isEditing, setIsEditing] = useState(false); // State for edit mode
     const [editForm, setEditForm] = useState({
         name: '',
@@ -21,7 +18,7 @@ const EventDetails = ({ eventId, onBackToList, showNotification }) => {
         organizer: '',
         description: ''
     }); // Edit form data
-    const [editLoading, setEditLoading] = useState(false); // Loading state for edit operation
+    const [editLoading, setEditLoading] = useState(false); 
 
     // Fetch event details and RSVPs
     useEffect(() => {
@@ -165,9 +162,7 @@ const EventDetails = ({ eventId, onBackToList, showNotification }) => {
     if (error) return <p className="text-center error-message margin-top-40">{error}</p>;
     if (!event) return <p className="text-center no-events-message margin-top-40">Event not found.</p>;
 
-    // Determine if the edit and delete buttons should be shown (UI logic, not backend auth)
-    // In the "no middleware" backend, anyone can edit/delete if they know the ID.
-    // This is just for user experience.
+    
     const showEditDeleteButtons = user && user.role === 'organizer';
 
     return (
