@@ -1,26 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { fetchEventById, rsvpToEvent, fetchRsvpsForEvent, deleteEvent, updateEvent } from '../api'; 
-import RSVPForm from './RSVPForm'; // Import the RSVP form component
-import { AuthContext } from '../App'; // To get logged-in user info
+import RSVPForm from './RSVPForm'; 
+import { AuthContext } from '../App'; 
 const EventDetails = ({ eventId, onBackToList, showNotification }) => {
-    const { user } = useContext(AuthContext); // Get user from context
+    const { user } = useContext(AuthContext); /
     const [event, setEvent] = useState(null);
     const [rsvps, setRsvps] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isRsvpConfirmed, setIsRsvpConfirmed] = useState(false); 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); 
-    const [isEditing, setIsEditing] = useState(false); // State for edit mode
+    const [isEditing, setIsEditing] = useState(false); 
     const [editForm, setEditForm] = useState({
         name: '',
         date: '',
         location: '',
         organizer: '',
         description: ''
-    }); // Edit form data
+    }); 
     const [editLoading, setEditLoading] = useState(false); 
-
-    // Fetch event details and RSVPs
     useEffect(() => {
         const getEventData = async () => {
             setLoading(true);
@@ -58,14 +56,14 @@ const EventDetails = ({ eventId, onBackToList, showNotification }) => {
         if (eventId) {
             getEventData();
         }
-    }, [eventId, user, showNotification]); // Re-run if eventId, user, or showNotification changes
+    }, [eventId, user, showNotification]);
 
     // Handle RSVP submission from RSVPForm
     const handleSubmitRSVP = async (id, rsvpData) => {
         try {
             const newRsvp = await rsvpToEvent(id, rsvpData);
-            setRsvps((prevRsvps) => [...prevRsvps, newRsvp]); // Add new RSVP to list
-            setIsRsvpConfirmed(true); // Set confirmed status
+            setRsvps((prevRsvps) => [...prevRsvps, newRsvp]); 
+            setIsRsvpConfirmed(true); 
             showNotification('Successfully RSVP\'d to the event!', 'success');
         } catch (err) {
             console.error('Error submitting RSVP:', err);
